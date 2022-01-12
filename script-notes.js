@@ -60,13 +60,13 @@
 // Arrow function shortcuts:
 // If an arrow function has 1 parameter, that parameter does not need parenthesis:
 
-[1,2,3,4,5].forEach((n) =>{
-    console.log(n *10);
-});
+// [1,2,3,4,5].forEach((n) =>{
+//     console.log(n *10);
+// });
 
-[1,2,3,4,5].forEach(n =>{ //n has no parenthesis
-    console.log(n *10);
-});
+// [1,2,3,4,5].forEach(n =>{ //n has no parenthesis
+//     console.log(n *10);
+// });
 
 // Arrow funciton with no parameters:
 
@@ -171,3 +171,159 @@ const cat = {
 // 2. Must put parentheses around parameters if there are 0 or 2+ parameters. 
 // 3. Return statement is implied if you leave out curly braces (must be 1 expression).
 // 4. They do not make there own this.
+
+// REST AND SPREAD: ...
+// Use spread to copy arrays and objects
+// Use rest to gather remaining arguments in an array
+
+// The Argument Object:
+// function max() {
+//     console.log(arguments);
+// };
+
+// function sum(){
+//     arguments.reduce((sum, val) =>{
+//         return sum+val;
+//     })
+// } //error - arguments.reduce is not a function
+
+function sum(){
+    const args = Array.from(arguments);
+    return args.reduce((sum, val) =>{
+        return sum+val;
+    });
+}
+
+// arguments object does not work in arrow functions either
+
+const max = function(){
+    const args = Array.from(arguments);
+    return args.reduce((max, currVal) => {
+        return currVal > max ? currVal : max;
+});
+};
+
+// Rest and Spread: They are *not* an ellipsis
+// function sum(...nums){
+//     console.log(nums);
+// } //creates an array of the arguments and logs it
+
+function sum(...nums){
+    return nums.reduce((sum, n) => sum + n);
+} //returns the sum of all arguments
+
+const sumAll = (...values) => {
+    if (!values.length) return undefined;
+    return values.reduce((sum, n) => sum + n);
+};
+
+//The rest operator is the last parameter defined in a function and will
+// evaluate to an array of all additional arguments passed in. 
+
+// function makeFamily(parent1, parent2, ...kids){
+//     console.log(parent1, parent2);
+//     console.log(kids);
+// }
+
+//Michael Stephanie
+//['Sebastien']
+
+function makeFamily(parent1, parent2, ...kids){
+    return {
+        parents: [parent1, parent2],
+        children: kids.length ? kids : 0
+    };
+}
+
+const filterByType = (type, ...vals) => {
+    return vals.filter(v => typeof v === type);
+};
+
+// Gotcha: Rest *must* be the last parameter in the function.
+
+// Spread:
+// max(...something) 
+// [...something]
+// {...something}
+
+// Executing a function and using spread to spread an iterable into individual arguments: 
+
+function takesFour(one, two, three, four) {
+    console.log(one);
+    console.log(two);
+    console.log(three);
+    console.log(four);
+}
+
+const names = ['Mary', 'Colt', 'Angela', 'Abe']
+
+takesFour(...names);
+// Mary
+// Colt
+// Angela
+// Abe
+
+// const nums = [4, 5, 88, 123, .92, 34]
+// Math.max(nums)
+//NaN, because it's checking the entire array as an entity but there's no other parameter
+// const nums = [4, 5, 88, 123, .92, 34]
+// Math.max(...nums)
+//123. because now it's checking each number inside the array
+
+// const filterByType = (type, ...vals) => {
+//     return vals.filter((v) => typeof v === type);
+// };
+
+const things = [ 23, 45, true, false, 0, 'hello', 'goodbye', undefined];
+
+filterByType('number', things); // []
+filterByType('number', ...things); //23, 45, 0
+filterByType('strings', ...things); //'hello', 'goodbye' 
+
+console.log(things); // [ 23, 45, true, false, 0, 'hello', 'goodbye', undefined] ie, the array
+console.log(...things); // 23 45 true false 0 'hello' 'goodbye' undefined - ie, each index of the array 
+console.log("hello"); // h e l l o - separated by spaces
+
+// You can spread iterables into an array literal. 
+
+const palette = ['lavender berry', 'sunflower yellow', 'orchid orange'];
+
+// const paletteCopy = palette; //This is NOT a copy, both names are pointing to the same place.
+
+// const paletteCopy = palette.slice(); //This is a copy.
+// const paletteCopy = [...palette]; //This is also a copy.
+const paletteCopy = ['sky blue', ...palette, 'grass green']; //this is a copy plus two colors
+
+let palette2 = palette.concat('deep purple'); // copy plus deep purple
+
+const greenTeas = ['snow jasmine', 'fragrant leaf'];
+const oolongTeas = ['honey orchid', 'winter sprout'];
+const herbalTeas = ['african solstice', 'marshmallowroot'];
+const coffees = ['guatemala red cat', 'snow leopard blend'];
+
+const allTeas = [...greenTeas, ...oolongTeas, ...herbalTeas];
+
+// ['snow jasmine', 'fragrant leaf', 'honey orchid', 'winter sprout', 'african solstice', 'marshmallowroot']
+
+const caffeinated = [...greenTeas, ...oolongTeas, ...coffees, 'Earl Grey'];
+
+const vowels = 'aeiou';
+const vowelArr = [...vowels];
+
+// Spread and Deep Copies
+const shoppingCart = [
+    {
+        name: 'honey orchid',
+        quantity: 2,
+        price: 13.5
+    },
+    {
+        name: 'african solstice',
+        quantity: 4,
+        price: 25.99
+    },
+]
+
+const cartCopy = [...shoppingCart]
+//shoppingCart and cartCopy *are not the same*, but the seemingly copied objects within them *are.*
+//Spread keeps the same references for nested elements. Creating "deep clones" is a longer conversation for later.

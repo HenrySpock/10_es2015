@@ -1,47 +1,17 @@
-let numbers = [1, 2, 3, 4.5, 6000, -23]
-// 1. ES5 Map Callback:
-// Original:
-// function double(arr) {
-//     return arr.map(function(val) {
-//       return val * 2;
-//     });
-//   }
+ES5 Global Constants
+var PI = 3.14;
+PI = 42; // stop me from doing this!
 
-function double(arr) {return arr.map(val => val * 2)};
+const PI = 3.14;
+Then Pi cannot be redeclared. 
 
-// 2. Refactor the following function to use arrow functions:
-// Original:
-// function squareAndFindEvens(numbers){
-//     var squares = numbers.map(function(num){
-//       return num ** 2;
-//     });
-//     var evens = squares.filter(function(square){
-//       return square % 2 === 0;
-//     });
-//     return evens;
-//   }
-
-// function squareAndFindEvens(numbers){
-//     var squares = numbers.map((num) => num ** 2);
-//     var evens = squares.filter((square) => square % 2 === 0);
-//     return evens;
-//   }
-
-// function squareAndFindEvens(numbers){
-//     var squares = numbers.map(num => num ** 2);
-//     var evens = squares.filter(square => square % 2 === 0);
-//     return evens;
-//   }
-
-// function squareAndFindEvens(numbers){
-//     var evenSquares = numbers.map(num => num ** 2).filter(square => square % 2 === 0);
-//     return evenSquares;
-//   }
-
- const squareAndEven = numbers => numbers.map(num => num ** 2).filter(square => square % 2 === 0);
-
- //Remember, even if you declare a function as a variable you can still execute the function() normally.
-
- 
- 
-  
+// Quiz: 
+// 1.  Var can be redeclared and reassigned, let cannot be redeclared. 
+//     Var appears on the window object, let does not. Also applies to Const.
+//     Var is function scoped, let is block scoped. Also applies to Const.
+// 2.  Const cannot be redeclared or reassigned, though on data strctures like array and object, the insides 
+// can be altered while the const declaration of the data structure remains the same.
+// 3.  Const can be neither redeclared nor reassigned, let can be reassigned.
+// 4.  To imagine hoisting, it understands the element in question as appearing at the top of the code such that
+// anything below it can access it. Var is hoisted (though it will be hoisted undefined unless initialized), 
+// let and const are not. Functions, on the other hand, are hoisted.

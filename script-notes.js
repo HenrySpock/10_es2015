@@ -327,3 +327,94 @@ const shoppingCart = [
 const cartCopy = [...shoppingCart]
 //shoppingCart and cartCopy *are not the same*, but the seemingly copied objects within them *are.*
 //Spread keeps the same references for nested elements. Creating "deep clones" is a longer conversation for later.
+
+
+
+
+
+// Object property shorthand:
+// function makePerson(first, last, age){
+// return {
+//     first: first,
+//     last: last,
+//     age: age,
+//     isaAlive: true
+//     };
+// };
+
+// New version:
+function makePerson(first, last, age) {
+    return {
+        first,
+        last,
+        age,
+        isaAlive: true
+        };
+    };
+    
+    
+    makePerson('jim', 'lennon', 29);
+    
+    // Shorthand Methods inside objects:
+    
+    // const mathStuff = {
+    //     x: 200,
+    //     add: function(a,b){
+    //         return a+b;
+    //     },
+    //     square: function(a) {
+    //         return a * a;
+    //     }
+    // };
+    
+    const mathStuff = {
+        x: 200,
+        add(a, b) {
+            return a + b;
+        },
+        square(a) {
+            return a * a;
+        }
+    };
+    
+    //Above cannot utilize arrow functions - because they would not be anonymous or they couldn't be decalred.
+    
+    // Computed Property Names: 
+    // Allows us to create and object with a key that JavaScript can compute at definition. 
+    
+    // const color = {
+    //     periwinkle: '9c88ff',
+    //     '9c88ff': 'periwinkle'
+    // };
+    
+    // function makeColor(name, hex){
+    //     return{
+    //         name: hex,
+    //         hex: name,
+    //     }
+    // } //Does not give expected object if you want the reciprocal nature of the above const: it sets name = 9c88ff and hex = to periwinkle.
+    
+    // Previously we had to do this:
+    
+    // function makeColor(name, hex) {
+    //     const color = {};
+    //     color[name] = hex;
+    //     color[hex] = name;
+    //     return color;
+    // }
+    
+    // But the shorthand now allows for this:
+    function makeColor(name, hex) {
+        return {
+            [name] : hex,
+            [hex] : name
+        }
+    }
+    
+    // This also evaluates code:
+    const mystery = {
+        [6 + 7]: 'thirteen'
+    };
+    
+    //13: "thirteen"
+    

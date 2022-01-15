@@ -418,3 +418,206 @@ function makePerson(first, last, age) {
     
     //13: "thirteen"
     
+// Destructuring
+
+// When you have a data structure (whether array or object) we can "destructure" or extract the values into new variables.
+
+const teaOrder = {
+    variety :'oolong',
+    teaName : 'winter sprout',
+    origin : 'taiwan',
+    price : 12.99,
+    hasCaffeine : true, 
+    quantity : 3
+};
+
+// const price = teaOrder.price;
+// const quantity = teaOrder.quantity;
+// const teaName = teaOrder.teaName;
+
+// const {price, quantity, teaName} = teaOrder; // is the same as the previous three lines.
+const { origin } = teaOrder;
+// If you try setting something in the brackets that doesn't exist, it's set as undefined.
+//It does not update the object.
+const { country } = teaOrder;
+
+function hi(...nums){
+
+} //will collect all arguments into a nums array
+
+//Using rest operator in destructing variable gathers unspecified values togehter in a variable
+// const {price, quantity, teaName, ...others} = teaOrder;
+// others // {variety: 'oolong', origin: 'taiwan', hasCaffeine: true}
+
+// Setting a default value with destructuring: 
+
+const options = {
+    refreshTime: 200
+}
+
+const { refreshTime = 750, waitTime = 1000 } = options;
+console.log(refreshTime); // 200 - initialized in options
+console.log(waitTime); // 1000 - fallback to default
+
+const { brewTemp = 175 } = teaOrder;
+// This sets a default for brewTemp, but if brewTemp is then initialized in teaOrder that takes precedence.
+// Basically, when brewTemp is undefined, this sets it to 175.
+
+// Renaming with destructuring:
+const instructorData = {
+    name: "Colt",
+    job: "Instructor"
+}
+
+const { name: instructorName, job: occupation } = instructorData;
+
+const { teaName : tea } = teaOrder;
+
+const { brewTemp: temp = 175 } = teaOrder;
+
+// function checkout(tea){
+//     const {quantity, price} = tea;
+//     return quantity * price;
+// }
+
+
+// checkout(teaOrder);
+
+function checkout(tea){
+        const {quantity = 1, price} = tea; //here we are setting a default in the function call
+        return quantity * price;
+    }
+
+const order1 = {
+    variety :'white',
+    teaName : 'silver needle',
+    origin : 'taiwan',
+    price : 12.99,
+    hasCaffeine : true, 
+};
+
+// Destructuring Arrays: 
+const myFavoriteThings = ['teaching', 'music', 'hiking', 'dank memes'];
+
+const [first, second, ...others] = myFavoriteThings;
+
+console.log(first); //teaching
+console.log(second); //music
+console.log(others); //['hiking', 'dank memes']
+
+const students = [
+    { name: 'Drake', gpa: 4.6 },
+    { name: 'Henrietta', gpa: 4.4 },
+    { name: 'Tung', gpa: 4.0 },
+    { name: 'Harry', gpa: 3.8 },
+    { name: 'An', gpa: 3.2 },
+]
+
+// const [ topStudent ] = students; //This is acting on index[0] automatically.
+// const [ topStudent, secondBest ] = students; //This is acting on index[0] and [1] automatically.
+// const [topStudent,,,fourthPlace] = students; //the additional commas skip those indices.
+// const [ topStudent, ...losers ]  = students;
+// To avoid commas, you can use: 
+// const fifth = students[4]
+
+// Function destructuring: 
+// function makeInstructor(settings) {
+//     let name = settings.name;
+//     let age = settings.age;
+// }
+
+// function myFunc({name, age}) {
+//     let name = name;
+//     let age = age;
+// }
+
+function getTotal(tea) {
+    const {quantity, price} = tea;
+    return quantity * price;
+}
+
+const order2 = {
+    variety :'white',
+    teaName : 'silver needle',
+    origin : 'taiwan',
+    price : 12.99,
+    hasCaffeine : true, 
+    // quantity : 4
+};
+
+// function getTotal({quantity, price}) { //This mean it takes quantiy and price keys from any object passed in.
+//     return quantity * price;
+// }
+
+function getTotal({quantity: qty = 1, price}) { 
+    return qty * price;
+}
+
+const longJumpResults = [ 'Tammy', 'Jessica', 'Violet' ];
+const swimMeetResults = [ 'Japan', 'France', 'Chile' ];
+
+function awardMedals([gold, silver, bronze]){
+    return {
+        gold, silver, bronze
+    }
+}
+
+// Nested Destructuring:
+const instructor = {
+    id: 44,
+    name: 'Colt',
+    isHilarious: true,
+    funFacts: {
+        favoriteFood: 'Burrito',
+        favoriteDrink: 'Old Fashioned'
+    }
+};
+
+const {funFacts: {favoriteFood, favoriteDrink}} = instructor;
+console.log(favoriteFood);
+
+const movie = {
+    Rated : {
+        rating : 'R',
+        advisory : 'Rated R for brief nudity'
+    },
+    Ratings : [
+        { Source: 'Internet Movie Database', Value: '8.3/10' },
+        { Source: 'Rotten Tomatoes', Value: '93%' },
+        { Source: 'Metacritic', Value: '88/100' }
+    ],
+    Versions : [
+    { version: 'Original Release', runtime: 161 },
+    { version: "Director's Cut", runtime: 180 }
+    ]
+}
+// const {Rated} = movie;
+// const {rating, advisory}=Rated;
+// or 
+const {Rated: {rating, advisory}} = movie;
+
+const { Ratings : [ 
+    { Value : imdbRating }, 
+    { Value : rtRating}, 
+    { Value : metaRating } 
+] , 
+Versions: [ 
+    { runtime: originalRunTime }, { runtime: directorsCutRunTime}
+]
+} = movie;
+
+// Destructuring Swap: 
+// Swapping values betweenv variables.
+
+let delicious = 'Mayonnaise';
+let disgusting = 'Whipped Cream';
+
+// let temp = delicious;
+// delicious = disgusting; 
+// disgusting = temp; //Without destructring you need a third variable as a placeholder.
+
+// let both = [delicious, disgusting ];
+// [ disgusting, delicious ] = both;
+[disgusting, delicious] = [delicious, disgusting]
+delicious // Whipped Cream 
+disgusting // Mayonnaise

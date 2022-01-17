@@ -621,3 +621,151 @@ let disgusting = 'Whipped Cream';
 [disgusting, delicious] = [delicious, disgusting]
 delicious // Whipped Cream 
 disgusting // Mayonnaise
+
+// Maps and Sets 
+// Data Structures: Arrays, Objects, Maps, Sets 
+// Maps - also called hash maps in other languages; objects were a replacement for maps 
+// Object keys can only be strings, whereas Map keys can be any data type at all. In an 
+// object, all keys are turned into strings, whereas in a map all key data types are respected. 
+
+// There is no "map literal", there is a constructor function:
+const myMap = new Map();
+
+// add key value pair: 
+myMap.set(7, 'seven') // {'7 => 'seven'}
+myMap.set('7', 'seven string');
+
+// retrieve:
+myMap.get(7);
+
+// If you want to store an array, object or function as a key in map, you have to 
+// store a reference to it: 
+
+// const empty = [];
+// myMap.set(empty, ['empty array!']);
+
+// myMap.set(true, 'TRUEEEE!');
+// myMap.get(true); // 'TRUEEEE!'
+// myMap.get('true'); //undefined
+
+// const add = (x,y) => x+y;
+// const mult = (x,y) => x*y;
+
+// const funcCalls = new Map();
+// funcCalls.set(add, 0);
+// funcCalls.set(mult, 0);
+
+// funcCalls.set(add, 1);
+// funcCalls.set(mult, 9);
+
+// funcCalls.get(add) //1 ; notice the argument is the name of the function 
+// funcCalls.get(mult) //9
+
+// Map Methods: 
+// Create a new non-empty map with an array passed in:
+// [[k,v],[k,v],[k,v]]
+
+const bandData = [[3, '3 Doors Down'],
+['three', 'Three Dog Night'],
+['nine', 'Nine Inch Nails'],
+['four', 'The Four Seasons'],
+[41, 'Sum 41']]
+
+const bandMap = new Map(bandData);
+
+// Can take any map and turn it back into an array with spread operator: 
+
+let bandArray = [...bandMap];
+
+// .set returns the entire map, so we can chain set calls:
+bandMap.set(182, 'Blink-182').set('twenty', 'Matchbox Twenty');
+
+// Check contents:
+
+bandMap.has(41) //true ; etc
+// bandMap.delete('twenty') // deletes Matchbox Twenty - can only use on key, not value
+// bandMap.clear() // empties entire map
+
+bandMap.keys() // MapIterator {3, 'three', 'nine', 'four', 41, 182, 'twenty'} 
+
+let bandNum = [...bandMap.keys()] // [3, 'three', 'nine', 'four', 41, 182, 'twenty']
+
+bandMap.values(); //MapIterator {'3 Doors Down', 'Three Dog Night', 'Nine Inch Nails', 'The Four Seasons', 'Sum 41', 'Blink-182', 'Matchbox Twenty'};
+
+let bandArr = [...bandMap.values()] // ['3 Doors Down', 'Three Dog Night', 'Nine Inch Nails', 'The Four Seasons', 'Sum 41', 'Blink-182', 'Matchbox Twenty']
+
+// Iterating Maps 
+// For of 
+// forEach
+// Maps are ordered, unlike objects. 
+// Maps also have a size:
+// bandMap.size
+
+// When iterating on Map with forEach:
+// *First* parameter is value, *second* is key, reversed from the idea of key/value pair:
+bandMap.forEach((val, key) => {
+console.log(key + ' => ' + val);
+});
+
+for (let x of bandMap){
+    console.log(x);
+};
+
+for (let [key, value] of bandMap){
+    console.log(key, '=', value);
+}
+
+// You can clear a map: 
+// map.clear();
+
+// Set basics 
+// Sets only store unique values (whereas arrays could store repeated values)
+// There is no literal, they are created witht he new keyword
+
+// const bannedHashTags = new Set();
+// can pass in an array:
+// let banned = ['nofilter', 'justsaying', 'winning', 'yolo']
+// const bannedHashTags = new Set(['nofilter', 'justsaying', 'winning', 'yolo']);
+// Or array as variable:
+// const bannedHashTags = new Set(banned);
+
+// const letters = new Set('hello', 'goodbye');
+//{'h', 'e', 'l', 'o'} : it won't give an error for multiple args but only takes one, and only takes unique instances, so here there's only one 'l'
+
+const bannedHashTags = new Set(['nofilter', 'justsaying', 'winning', 'yolo']);
+// Add to set with add(), and you can chain adds: 
+bannedHashTags.add('bestLife').add('selfie');
+// checking for a value: 
+// has() (cannot chain has)
+bannedHashTags.has('yolo');
+// remove value:
+bannedHashTags.delete();
+
+function filterHashTags(tags){
+    const bannedHashTags = new Set(['nofilter', 'justsaying', 'winning', 'yolo']);
+    return tags.filter((tag) => !bannedHashTags.has(tag))
+}
+
+const susansTags = ['happymonday', 'yolo', 'winning', 'sunset']
+
+const ages = [45, 42, 21, 23, 24, 98, 2, 4, 4, 12, 3, 12, 45];
+// If you want to turn a set into an array to be able to work with it the same way:
+// new Set(ages); simply makes a set out of ages 
+// let ageRed = new Set(ages); stores the set from the array to a variable
+// but:
+[...new Set(ages)] //Actually spreads the set of 'ages' into an array
+let ageRed = [...new Set(ages)] // Which could be set to a variable 
+// You can also clear, like with maps: 
+// set.clear();
+
+// Where do you use sets: 
+// Am I removing duplicate values?
+// Do I need unique values?
+// Much more efficient to search through collection than an array
+
+// NaN is never equal to itself 
+
+// Maps: 
+// Keys can be anything we want 
+// can use forEach and for... of
+// Finding size is way easier 
